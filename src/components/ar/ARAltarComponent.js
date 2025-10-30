@@ -333,15 +333,24 @@ export class ARAltarComponent {
   /**
    * Add a memorial to the altar
    */
-  addMemorialToAltar(memorial, levelName = 'tierra') {
+  addMemorialToAltar(memorial, levelName = null) {
+    // Determine level based on memorial data or use specified level
+    if (!levelName) {
+      const levelNames = Object.keys(this.levels)
+      levelName = memorial.altarLevel ? 
+        levelNames[memorial.altarLevel - 1] : 
+        this.determineOptimalLevel(memorial)
+    }
+    
     const level = this.levels[levelName]
     if (!level) return
     
-    // Create memorial photo frame
-    const frameGeometry = new THREE.PlaneGeometry(0.3, 0.4)
+    // Create memorial photo frame with enhanced styling
+    const frameGeometry = new THREE.PlaneGeometry(0.4, 0.5)
     const frameMaterial = new THREE.MeshLambertMaterial({ 
       color: 0xFFFFFF,
-      transparent: true
+      transparent: true,
+      opacity: 0.9
     })
     
     // Load memorial photo if available
@@ -350,42 +359,185 @@ export class ARAltarComponent {
       textureLoader.load(
         memorial.photo,
         (texture) => {
+          texture.minFilter = THREE.LinearFilter
+          texture.magFilter = THREE.LinearFilter
           frameMaterial.map = texture
           frameMaterial.needsUpdate = true
         },
         undefined,
         (error) => {
           console.warn('Failed to load memorial photo:', error)
+          // Use default memorial texture
+          this.createDefaultMemorialTexture(frameMaterial, memorial)
         }
       )
+    } else {
+      // Create default memorial texture with name
+      this.createDefaultMemorialTexture(frameMaterial, memorial)
     }
     
     const frame = new THREE.Mesh(frameGeometry, frameMaterial)
     
-    // Position on the level
+    // Position on the level with better spacing
     const existingMemorials = level.memorials.length
-    const angle = (existingMemorials / 6) * Math.PI * 2
-    const radius = 0.8
+    const maxMemorials = 8
+    const angle = (existingMemorials / maxMemorials) * Math.PI * 2
+    const radius = 1.2
     
     frame.position.set(
       Math.cos(angle) * radius,
-      level.y + 0.5,
+      level.y + 0.6,
       Math.sin(angle) * radius
     )
-    frame.lookAt(0, level.y + 0.5, 0)
+    frame.lookAt(0, level.y + 0.6, 0)
+    
+    // Add subtle glow effect
+    const glowGeometry = new THREE.PlaneGeometry(0.5, 0.6)
+    const glowMaterial = new THREE.MeshBasicMaterial({
+      color: 0xFFD700,
+      transparent: true,
+      opacity: 0.2,
+      side: THREE.BackSide
+    })
+    const glow = new THREE.Mesh(glowGeometry, glowMaterial)
+    glow.position.copy(frame.position)
+    glow.position.z -= 0.01
+    glow.lookAt(0, level.y + 0.6, 0)
     
     frame.userData = {
       type: 'memorial',
       memorial: memorial,
-      interactive: true
+      interactive: true,
+      level: levelName,
+      glowEffect: glow
     }
     
     this.altarGroup.add(frame)
+    this.altarGroup.add(glow)
     this.interactiveObjects.push(frame)
     level.memorials.push(memorial)
     
-    // Add name label
-    this.addMemorialLabel(memorial, frame.position)
+    // Add enhanced name label
+    this.addMemorialLabel(memorial, frame.position, levelName)
+    
+    // Add memorial to app state if not already there
+    const existingMemorials = appState.get('memorials') || []
+    const memorialExists = existingMemorials.find(m => m.id === memorial.id)
+    if (!memorialExists) {
+      appState.actions.addMemorial(memorial)
+    }
+    
+    console.log(`🕯️ Added memorial ${memorial.name} to ${levelName} level`)
+    
+    return frame
+  }
+
+  /**
+   * Determine optimal altar level for memorial based on relationship and age
+   */
+  determineOptimalLevel(memorial) {
+    const relationship = memorial.relationship?.toLowerCase() || ''
+    
+    // Calculate age if dates are available
+    let age = 0
+    if (memorial.birthDate && memorial.deathDate) {
+      const birth = new Date(memorial.birthDate)
+      const death = new Date(memorial.deathDate)
+      age = death.getFullYear() - birth.getFullYear()
+    }
+    
+    // Grandparents and great-grandparents go to heaven level (cielo)
+    if (relationship.includes('abuelo') || relationship.includes('abuela') || 
+        relationship.includes('bisabuelo') || relationship.includes('bisabuela') ||
+        age > 75) {
+      return 'cielo'
+    }
+    
+    // Parents and older relatives go to purgatory level
+    if (relationship.includes('padre') || relationship.includes('madre') ||
+        relationship.includes('tio') || relationship.includes('tia') ||
+        (age > 45 && age <= 75)) {
+      return 'purgatorio'
+    }
+    
+    // Siblings, children, and younger relatives go to earth level (tierra)
+    return 'tierra'
+  }
+
+  /**
+   * Create default memorial texture with name
+   */
+  createDefaultMemorialTexture(material, memorial) {
+    const canvas = document.createElement('canvas')
+    const context = canvas.getContext('2d')
+    canvas.width = 256
+    canvas.height = 320
+    
+    // Background gradient
+    const gradient = context.createLinearGradient(0, 0, 0, 320)
+    gradient.addColorStop(0, '#f8f9fa')
+    gradient.addColorStop(1, '#e9ecef')
+    context.fillStyle = gradient
+    context.fillRect(0, 0, 256, 320)
+    
+    // Border
+    context.strokeStyle = '#6c757d'
+    context.lineWidth = 4
+    context.strokeRect(2, 2, 252, 316)
+    
+    // Memorial icon
+    context.fillStyle = '#495057'
+    context.font = 'bold 48px Arial'
+    context.textAlign = 'center'
+    context.fillText('🕊️', 128, 100)
+    
+    // Name
+    context.fillStyle = '#212529'
+    context.font = 'bold 20px Arial'
+    context.textAlign = 'center'
+    
+    // Wrap text if too long
+    const name = memorial.name || 'Memorial'
+    const words = name.split(' ')
+    let line = ''
+    let y = 160
+    
+    for (let n = 0; n < words.length; n++) {
+      const testLine = line + words[n] + ' '
+      const metrics = context.measureText(testLine)
+      const testWidth = metrics.width
+      
+      if (testWidth > 200 && n > 0) {
+        context.fillText(line, 128, y)
+        line = words[n] + ' '
+        y += 25
+      } else {
+        line = testLine
+      }
+    }
+    context.fillText(line, 128, y)
+    
+    // Relationship
+    if (memorial.relationship) {
+      context.font = '16px Arial'
+      context.fillStyle = '#6c757d'
+      context.fillText(memorial.relationship, 128, y + 30)
+    }
+    
+    // Dates
+    if (memorial.birthDate || memorial.deathDate) {
+      const birthYear = memorial.birthDate ? new Date(memorial.birthDate).getFullYear() : '?'
+      const deathYear = memorial.deathDate ? new Date(memorial.deathDate).getFullYear() : '?'
+      context.font = '14px Arial'
+      context.fillText(`${birthYear} - ${deathYear}`, 128, y + 50)
+    }
+    
+    // Create texture
+    const texture = new THREE.CanvasTexture(canvas)
+    texture.minFilter = THREE.LinearFilter
+    texture.magFilter = THREE.LinearFilter
+    material.map = texture
+    material.needsUpdate = true
   }
 
   /**

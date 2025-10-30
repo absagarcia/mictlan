@@ -7,6 +7,7 @@
 import { i18n } from '../../i18n/i18n.js'
 import { appState } from '../../state/AppState.js'
 import { accessibilityManager } from '../../utils/accessibility.js'
+import MCPService from '../../services/MCPService.js'
 
 export class EducationalContentComponent {
   constructor(container) {
@@ -25,6 +26,9 @@ export class EducationalContentComponent {
     console.log('📚 Initializing Educational Content Component...')
 
     try {
+      // Initialize MCP services
+      await MCPService.initialize()
+      
       // Load cultural data
       await this.loadCulturalData()
       
@@ -91,7 +95,7 @@ export class EducationalContentComponent {
   /**
    * Show educational content for a specific altar level
    */
-  showLevelContent(level) {
+  async showLevelContent(level) {
     this.currentLevel = level
     const levelData = this.culturalData.altarLevels[level]
     
@@ -100,13 +104,17 @@ export class EducationalContentComponent {
       return
     }
 
+    // Translate content if needed
+    const currentLang = appState.get('user.language') || 'es'
+    const translatedData = await this.translateContentIfNeeded(levelData, currentLang)
+
     // Create content modal
-    const modal = this.createContentModal(levelData, 'level')
+    const modal = this.createContentModal(translatedData, 'level')
     document.body.appendChild(modal)
     
     // Dispatch event for other components
     document.dispatchEvent(new CustomEvent('educational-content-shown', {
-      detail: { type: 'level', level, data: levelData }
+      detail: { type: 'level', level, data: translatedData }
     }))
   }
 
@@ -128,6 +136,43 @@ export class EducationalContentComponent {
     // Dispatch event for other components
     document.dispatchEvent(new CustomEvent('educational-content-shown', {
       detail: { type: 'coco-themes', data: cocoData }
+    }))
+  }
+
+  /**
+   * Show specific Coco theme
+   */
+  showCocoTheme(themeKey) {
+    const themeData = this.culturalData.cocoThemes[themeKey]
+    
+    if (!themeData) {
+      console.warn(`No Coco theme data found for ${themeKey}`)
+      return
+    }
+
+    // Create content modal for specific theme
+    const modal = this.createCocoThemeModal(themeData, themeKey)
+    document.body.appendChild(modal)
+    
+    // Dispatch event for other components
+    document.dispatchEvent(new CustomEvent('educational-content-shown', {
+      detail: { type: 'coco-theme', themeKey, data: themeData }
+    }))
+  }
+
+  /**
+   * Show cultural context with Coco connections
+   */
+  showCulturalContext(contextType, itemData) {
+    const currentLang = appState.get('user.language') || 'es'
+    
+    // Create enhanced cultural context modal
+    const modal = this.createCulturalContextModal(contextType, itemData, currentLang)
+    document.body.appendChild(modal)
+    
+    // Dispatch event for other components
+    document.dispatchEvent(new CustomEvent('educational-content-shown', {
+      detail: { type: 'cultural-context', contextType, data: itemData }
     }))
   }
 
@@ -837,6 +882,55 @@ export class EducationalContentComponent {
         </p>
       </div>
     `
+  }
+
+  /**
+   * Translate content if needed using MCP translation service
+   */
+  async translateContentIfNeeded(data, targetLanguage) {
+    // If content already exists in target language, return it
+    if (data[targetLanguage]) {
+      return data
+    }
+
+    // If we have Spanish content and need English, translate it
+    if (targetLanguage === 'en' && data.es) {
+      try {
+        const translatedData = { ...data }
+        const sourceContent = data.es
+
+        // Translate key fields
+        if (sourceContent.name) {
+          translatedData.en = { ...sourceContent }
+          translatedData.en.name = await MCPService.translateText(sourceContent.name, 'en', 'es')
+        }
+        
+        if (sourceContent.description) {
+          translatedData.en.description = await MCPService.translateText(sourceContent.description, 'en', 'es')
+        }
+        
+        if (sourceContent.meaning) {
+          translatedData.en.meaning = await MCPService.translateText(sourceContent.meaning, 'en', 'es')
+        }
+
+        // Translate Coco connection if present
+        if (sourceContent.cocoConnection) {
+          translatedData.en.cocoConnection = {
+            description: await MCPService.translateText(sourceContent.cocoConnection.description, 'en', 'es'),
+            quote: sourceContent.cocoConnection.quote, // Keep quotes in original language
+            scene: sourceContent.cocoConnection.scene ? 
+              await MCPService.translateText(sourceContent.cocoConnection.scene, 'en', 'es') : undefined
+          }
+        }
+
+        return translatedData
+      } catch (error) {
+        console.warn('Translation failed, using original content:', error)
+        return data
+      }
+    }
+
+    return data
   }
 
   /**

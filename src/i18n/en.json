@@ -9,6 +9,7 @@
         "altar": "Altar",
         "memories": "Memories",
         "family": "Family",
+        "sharing": "Share",
         "learn": "Learn",
         "settings": "Settings"
     },
@@ -227,11 +228,438 @@
         "previous": "Previous",
         "finish": "Finish"
     },
+    "sharing": {
+        "title": "Share and Export",
+        "subtitle": "Share your family memories or export your collection",
+        "export_pdf": "Export PDF",
+        "export_json": "Export JSON",
+        "create_link": "Create Link",
+        "social_media": "Social Media",
+        "select_memorials": "Select Memories",
+        "select_all": "Select All",
+        "select_none": "Deselect All",
+        "selected_count": "selected",
+        "no_memorials": "No memories to share",
+        "create_first_memorial": "Create some family memories first",
+        "export_options": "Export Options",
+        "pdf_title": "PDF Title",
+        "include_photos": "Include photographs",
+        "include_stories": "Include stories",
+        "include_audio_note": "Include note about audio messages",
+        "pdf_orientation": "Orientation",
+        "portrait": "Portrait (Vertical)",
+        "landscape": "Landscape (Horizontal)",
+        "generate_pdf": "Generate PDF",
+        "pdf_generated": "PDF Exported",
+        "pdf_success": "PDF generated with {count} memories",
+        "json_exported": "JSON Exported",
+        "json_success": "JSON file exported with {count} memories",
+        "share_options": "Share Options",
+        "expiration": "Link expiration",
+        "password_protection": "Password protection",
+        "allow_download": "Allow download",
+        "create_sharing_link": "Create Sharing Link",
+        "link_created": "Link Created",
+        "link_success": "Link created successfully!",
+        "share_url": "Sharing link",
+        "copy_link": "Copy link",
+        "link_copied": "Link Copied",
+        "quick_share": "Quick share",
+        "whatsapp": "WhatsApp",
+        "telegram": "Telegram",
+        "email": "Email",
+        "twitter": "Twitter",
+        "facebook": "Facebook",
+        "social_message": "Custom message",
+        "hashtags_suggested": "Suggested Hashtags",
+        "platform_opened": "Opened {platform} to share",
+        "sharing_stats": "Sharing Statistics",
+        "total_shares": "Links Created",
+        "active_shares": "Active Links",
+        "total_access": "Total Access",
+        "memorials_shared": "Memories Shared",
+        "default_message": "Preserving family memories with Mictla 🌺 A beautiful way to honor our loved ones on Day of the Dead.",
+        "jsconfmx_message": "Created for JSConf MX 2025 - Code of the Dead Challenge",
+        "error_export": "Export error",
+        "error_share": "Share error",
+        "error_create_link": "Error creating link"
+    },
     "pwa": {
         "install": "Install App",
         "update_available": "Update available",
         "update_now": "Update now",
         "offline": "Offline",
         "online": "Online"
+    },
+    "nav": {
+        "home": "Home",
+        "altar": "AR Altar",
+        "memories": "Memories",
+        "family": "Family",
+        "learn": "Learn",
+        "settings": "Settings"
+    },
+    "features": {
+        "altar": {
+            "title": "AR Altar",
+            "description": "Explore a Day of the Dead altar in augmented reality",
+            "action": "Explore Altar"
+        },
+        "memories": {
+            "title": "Memory Book",
+            "description": "Create and save memories of your loved ones",
+            "action": "View Memories"
+        },
+        "learn": {
+            "title": "Learn",
+            "description": "Discover Day of the Dead traditions",
+            "action": "Learn More"
+        },
+        "family": {
+            "title": "Family",
+            "description": "Share memories with your family",
+            "action": "Connect Family"
+        }
+    },
+    "stats": {
+        "memorials": "Memorials",
+        "ar_support": "AR Support",
+        "family_members": "Members"
+    },
+    "home": {
+        "getting_started": "Getting Started",
+        "step1": {
+            "title": "Explore the Altar",
+            "description": "Discover traditional levels in AR"
+        },
+        "step2": {
+            "title": "Create Memories",
+            "description": "Honor your loved ones"
+        },
+        "step3": {
+            "title": "Share with Family",
+            "description": "Connect with your relatives"
+        }
+    },
+    "memory": {
+        "title": "Memory Book",
+        "subtitle": "Honor and remember your loved ones",
+        "add_memorial": "Add Memorial",
+        "form": {
+            "name": "Full name",
+            "name_placeholder": "Enter full name",
+            "relationship": "Relationship",
+            "select_relationship": "Select relationship",
+            "birth_date": "Birth date",
+            "death_date": "Death date",
+            "photo": "Photograph",
+            "photo_help": "Formats: JPG, PNG. Maximum 5MB",
+            "story": "Story or memory",
+            "story_placeholder": "Share a special story or memory...",
+            "altar_level": "Altar level",
+            "altar_level_help": "Choose where to place this memorial on the altar"
+        },
+        "saving": "Saving memorial...",
+        "memorial_added": "Memorial Added",
+        "memorial_added_message": "Added memorial for {name}",
+        "errors": {
+            "required_fields": "Please complete the required fields",
+            "add_failed": "Failed to add memorial",
+            "file_too_large": "File is too large (maximum 5MB)",
+            "invalid_file_type": "Invalid file type",
+            "image_processing": "Error processing image",
+            "file_read": "Error reading file"
+        },
+        "relationship": "Relationship",
+        "birth_date": "Birth",
+        "death_date": "Death",
+        "altar_level": "Altar level",
+        "story": "Story",
+        "audio_message": "Audio message",
+        "audio_not_supported": "Your browser doesn't support audio",
+        "family_connections": "Family connections",
+        "virtual_offerings": "Virtual offerings",
+        "sharing_info": "Sharing information",
+        "timeline": "Timeline",
+        "no_photo": "No photograph",
+        "no_connections": "No family connections",
+        "no_offerings": "No virtual offerings",
+        "add_offering": "Add Offering",
+        "select_offering": "Select an offering",
+        "offering_added": "Offering Added",
+        "offering_added_message": "Added {offering} to memorial",
+        "shared_with_family": "Shared with family",
+        "shared_with": "Shared with",
+        "share_code": "Share code",
+        "connections": {
+            "parents": "Parents",
+            "spouse": "Spouse",
+            "children": "Children"
+        },
+        "timeline": {
+            "created": "Memorial created",
+            "updated": "Memorial updated",
+            "shared": "Memorial shared"
+        },
+        "not_found": "Memorial not found",
+        "not_found_desc": "The memorial you're looking for doesn't exist or was deleted",
+        "edit_memorial": "Edit Memorial",
+        "edit_coming_soon": "Memorial editing will be available soon"
+    },
+    "family": {
+        "title": "Family",
+        "subtitle": "Connect and share memories with your family",
+        "invite_members": "Invite Members",
+        "create_group": "Create Group",
+        "tabs": {
+            "overview": "Overview",
+            "tree": "Tree",
+            "sharing": "Sharing",
+            "members": "Members"
+        },
+        "status": {
+            "connected": "Connected to family group",
+            "not_connected": "No family group",
+            "group_name": "Group",
+            "members": "Members",
+            "create_or_join": "Create a new group or join an existing one"
+        },
+        "stats": {
+            "total_memorials": "Total memorials",
+            "shared_memorials": "Shared memorials",
+            "family_members": "Family members"
+        },
+        "recent_activity": "Recent activity",
+        "no_recent_activity": "No recent activity",
+        "activity": {
+            "memorial_added": "Added memorial for {name}"
+        },
+        "quick_actions": "Quick actions",
+        "actions": {
+            "share_memorial": "Share Memorial",
+            "share_memorial_desc": "Share a memorial with family",
+            "view_tree": "View Family Tree",
+            "view_tree_desc": "Visualize family connections",
+            "invite_member": "Invite Member",
+            "invite_member_desc": "Invite a family member to the group"
+        },
+        "no_group": "No family group",
+        "no_group_desc": "Create or join a group to share memories",
+        "group_members": "Group members",
+        "invite_member": "Invite member",
+        "roles": {
+            "admin": "Administrator",
+            "member": "Member"
+        },
+        "joined": "Joined",
+        "change_role": "Change role",
+        "remove": "Remove",
+        "admin": "Admin",
+        "form": {
+            "group_name": "Group name",
+            "group_name_placeholder": "e.g. García Family",
+            "description": "Description",
+            "description_placeholder": "Describe your family group...",
+            "invite_code": "Invitation code",
+            "invite_code_placeholder": "Enter 8-character code",
+            "invite_code_help": "Request the code from a family member",
+            "email": "Email address",
+            "email_placeholder": "email@example.com",
+            "role": "Role",
+            "message": "Custom message",
+            "message_placeholder": "Optional message for the invitation..."
+        },
+        "group_created": "Group Created",
+        "group_created_message": "Successfully created group '{name}'",
+        "join_requested": "Request Sent",
+        "join_requested_message": "Request to join group has been sent",
+        "invite_sent": "Invitation Sent",
+        "invite_sent_message": "Invitation sent to {email}",
+        "errors": {
+            "validation": "Validation error",
+            "group_name_required": "Group name is required",
+            "create_failed": "Failed to create group",
+            "join_failed": "Failed to join group",
+            "invite_code_required": "Invitation code is required",
+            "email_required": "Email address is required",
+            "invite_failed": "Failed to send invitation"
+        },
+        "join_group": "Join Group"
+    },
+    "actions": {
+        "reload": "Reload",
+        "go_home": "Go Home",
+        "go_back": "Go Back",
+        "back_to_memories": "Back to Memories",
+        "edit": "Edit",
+        "share": "Share",
+        "view_in_ar": "View in AR"
+    },
+    "errors": {
+        "page_not_found": "Page not found",
+        "page_not_found_desc": "The page you're looking for doesn't exist or was moved",
+        "try_these_instead": "Try these links instead:",
+        "cultural_quote": "Death does not steal our loved ones. On the contrary, it keeps them and immortalizes them in memory",
+        "cultural_quote_source": "Francoise Mauriac",
+        "critical_error": "Critical error",
+        "critical_error_desc": "An unexpected error occurred in the application",
+        "technical_details": "Technical details",
+        "try_again": "Try again",
+        "home_load_failed": "Failed to load home page",
+        "memory_load_failed": "Failed to load memories",
+        "family_load_failed": "Failed to load family page",
+        "settings_load_failed": "Failed to load settings",
+        "memory_detail_load_failed": "Failed to load memorial details"
+    },
+    "settings": {
+        "title": "Settings",
+        "subtitle": "Customize your Mictla experience",
+        "general": {
+            "title": "General",
+            "language": "Language",
+            "language_desc": "Change the application language",
+            "theme": "Theme",
+            "theme_desc": "Choose between light, dark, or automatic theme",
+            "audio": "Audio enabled",
+            "audio_desc": "Enable sounds and narrations"
+        },
+        "theme": {
+            "auto": "Automatic",
+            "light": "Light",
+            "dark": "Dark"
+        },
+        "ar": {
+            "title": "Augmented Reality",
+            "enabled": "AR enabled",
+            "enabled_desc": "Enable augmented reality features",
+            "checking": "Checking support...",
+            "supported": "AR supported on this device",
+            "not_supported": "AR not supported on this device",
+            "not_available": "AR not available",
+            "check_failed": "Failed to check AR support"
+        },
+        "privacy": {
+            "title": "Privacy and Sync",
+            "auto_sync": "Automatic sync",
+            "auto_sync_desc": "Automatically sync with family",
+            "conflict_resolution": "Conflict resolution",
+            "conflict_resolution_desc": "How to resolve sync conflicts",
+            "manual": "Manual",
+            "prefer_local": "Prefer local",
+            "prefer_remote": "Prefer remote"
+        },
+        "export": {
+            "title": "Export",
+            "include_audio": "Include audio",
+            "include_audio_desc": "Include audio messages in exports",
+            "format": "Export format",
+            "format_desc": "Default format for exports",
+            "quality": "Image quality",
+            "quality_desc": "Quality of images in exports",
+            "high": "High",
+            "medium": "Medium",
+            "low": "Low"
+        },
+        "data": {
+            "title": "Data Management",
+            "export": "Export Data",
+            "import": "Import Data",
+            "clear": "Clear Data",
+            "storage_used": "Storage used",
+            "last_backup": "Last backup",
+            "never": "Never",
+            "export_success": "Data Exported",
+            "export_success_message": "Backup file downloaded",
+            "export_failed": "Export failed",
+            "import_confirm": "Confirm Import",
+            "import_confirm_message": "Are you sure you want to import this data?",
+            "memorials": "Memorials",
+            "export_date": "Export date",
+            "version": "Version",
+            "import_warning": "⚠️ This will replace all your current data",
+            "import_success": "Data Imported",
+            "import_success_message": "Data imported successfully",
+            "import_failed": "Import failed",
+            "invalid_format": "Invalid file format",
+            "clear_confirm": "Confirm Clear",
+            "clear_warning": "This will permanently delete ALL your data",
+            "clear_irreversible": "This action cannot be undone",
+            "clear_recommendation": "We recommend exporting your data first",
+            "clear_success": "Data Cleared",
+            "clear_success_message": "All data has been deleted",
+            "clear_failed": "Failed to clear data"
+        },
+        "help": {
+            "title": "Help",
+            "restart_tutorial": "Restart Tutorial",
+            "restart_tutorial_desc": "Would you like to see the introduction tutorial again?",
+            "restart_tutorial_warning": "This will guide you through all the main features again.",
+            "keyboard_shortcuts": "Keyboard Shortcuts",
+            "accessibility_guide": "Accessibility Guide",
+            "navigation_shortcuts": "Navigation",
+            "app_shortcuts": "Application",
+            "navigate_elements": "Navigate between elements",
+            "activate_element": "Activate element",
+            "close_modal": "Close modal or dialog",
+            "navigate_tutorial": "Navigate in tutorial",
+            "go_home": "Go to home",
+            "go_memories": "Go to memories",
+            "go_altar": "Go to altar",
+            "go_family": "Go to family",
+            "screen_reader_support": "Screen Reader Support",
+            "aria_labels": "Descriptive ARIA labels on all elements",
+            "semantic_html": "Semantic HTML for better navigation",
+            "live_regions": "Live regions to announce changes",
+            "focus_management": "Intelligent focus management",
+            "keyboard_navigation": "Keyboard Navigation",
+            "tab_navigation": "Complete Tab navigation",
+            "skip_links": "Skip links to main content",
+            "focus_indicators": "Visual focus indicators",
+            "visual_accessibility": "Visual Accessibility",
+            "high_contrast": "High contrast mode support",
+            "color_contrast": "WCAG AA color contrast",
+            "font_scaling": "System font scaling",
+            "reduced_motion": "Respect for reduced motion preferences",
+            "mobile_accessibility": "Mobile Accessibility",
+            "touch_targets": "Appropriately sized touch targets",
+            "voice_control": "Voice control compatibility",
+            "gesture_alternatives": "Alternatives to complex gestures"
+        },
+        "about": {
+            "title": "About",
+            "challenge": "JSConf MX Challenge",
+            "challenge_desc": "Created for the Code of the Dead Challenge 2025"
+        }
+    },
+    "notifications": {
+        "language_changed": "Language Changed",
+        "language_set_to": "Language changed to",
+        "theme_changed": "Theme Changed",
+        "theme_set_to": "Theme changed to"
+    },
+    "time": {
+        "just_now": "Just now",
+        "minutes_ago": "{count} minutes ago"
+    },
+    "relationships": {
+        "father": "Father",
+        "mother": "Mother",
+        "grandfather": "Grandfather",
+        "grandmother": "Grandmother",
+        "brother": "Brother",
+        "sister": "Sister",
+        "uncle": "Uncle",
+        "aunt": "Aunt",
+        "cousin_m": "Cousin (Male)",
+        "cousin_f": "Cousin (Female)",
+        "other": "Other"
+    },
+    "altar": {
+        "level1_desc": "Earth - Where we live",
+        "level2_desc": "Purgatory - Transition",
+        "level3_desc": "Heaven - Eternal rest"
+    },
+    "offerings": {
+        "vela": "Candle"
     }
 }

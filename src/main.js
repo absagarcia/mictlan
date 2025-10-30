@@ -7,6 +7,7 @@ import { appState } from './state/AppState.js'
 import { router } from './router/Router.js'
 import { i18n } from './i18n/i18n.js'
 import { accessibilityManager } from './utils/accessibility.js'
+import { tutorialSystem } from './components/ui/TutorialSystem.js'
 import './styles/main.css'
 import './styles/accessibility.css'
 
@@ -31,6 +32,9 @@ class MictlaApp {
       // Initialize accessibility manager first
       accessibilityManager.init()
       
+      // Make accessibility manager globally available
+      window.accessibilityManager = accessibilityManager
+      
       // Initialize core systems
       await this.initializeCore()
       
@@ -48,6 +52,9 @@ class MictlaApp {
       
       // Add skip link
       this.addSkipLink()
+      
+      // Initialize tutorial system
+      tutorialSystem.init()
       
       // Mark as initialized
       this.initialized = true
@@ -120,6 +127,13 @@ class MictlaApp {
     router.route('/learn', async ({ container }) => {
       const { LearnView } = await import('./views/LearnView.js')
       const view = new LearnView(container)
+      await view.render()
+    })
+
+    // Sharing and export route
+    router.route('/sharing', async ({ container }) => {
+      const { SharingView } = await import('./views/SharingView.js')
+      const view = new SharingView(container)
       await view.render()
     })
 

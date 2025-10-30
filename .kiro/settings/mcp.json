@@ -1,0 +1,46 @@
+{
+  "mcpServers": {
+    "translation-mcp": {
+      "command": "uvx",
+      "args": ["translation-mcp-server@latest"],
+      "env": {
+        "FASTMCP_LOG_LEVEL": "ERROR"
+      },
+      "disabled": false,
+      "autoApprove": [
+        "translateText",
+        "detectLanguage",
+        "getSupportedLanguages"
+      ]
+    },
+    "image-processing-mcp": {
+      "command": "uvx",
+      "args": ["image-optimization-mcp@latest"],
+      "env": {
+        "FASTMCP_LOG_LEVEL": "ERROR"
+      },
+      "disabled": false,
+      "autoApprove": [
+        "compressImage",
+        "generateThumbnail",
+        "optimizeForWeb",
+        "validateImageFormat"
+      ]
+    },
+    "cultural-validation-mcp": {
+      "command": "uvx",
+      "args": ["cultural-content-validator@latest"],
+      "env": {
+        "FASTMCP_LOG_LEVEL": "ERROR",
+        "CULTURAL_CONTEXT": "dia_de_muertos"
+      },
+      "disabled": false,
+      "autoApprove": [
+        "validateTradition",
+        "checkCulturalAccuracy",
+        "suggestCulturalContent",
+        "validateOfferingTypes"
+      ]
+    }
+  }
+}

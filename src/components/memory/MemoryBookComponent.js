@@ -7,6 +7,7 @@ import { Memorial } from '../../types/index.js'
 import { storageManager } from '../../services/StorageManager.js'
 import { validationService } from '../../services/ValidationService.js'
 import { appState } from '../../state/AppState.js'
+import MCPService from '../../services/MCPService.js'
 
 export class MemoryBookComponent {
   constructor(container) {
@@ -32,6 +33,8 @@ export class MemoryBookComponent {
   async initializeStorage() {
     try {
       await storageManager.init()
+      // Initialize MCP services
+      await MCPService.initialize()
     } catch (error) {
       console.error('Failed to initialize storage:', error)
       this.showError('Failed to initialize storage. Some features may not work.')
@@ -435,6 +438,16 @@ export class MemoryBookComponent {
         this.showValidationErrors(validation.errors)
         return
       }
+
+      // Cultural validation using MCP
+      if (memorialData.story) {
+        const culturalValidation = await MCPService.validateTradition(memorialData.story, 'memorial')
+        if (!culturalValidation.isValid) {
+          this.showFieldError('story', 'El contenido no es culturalmente apropiado. ' + 
+            (culturalValidation.suggestions.length > 0 ? culturalValidation.suggestions[0] : ''))
+          return
+        }
+      }
       
       // Save memorial
       const memorial = await storageManager.saveMemorial(validation.sanitized)
@@ -484,6 +497,30 @@ export class MemoryBookComponent {
   }
 
   async compressImage(file, maxWidth = 800, quality = 0.8) {
+    try {
+      // First convert file to data URL
+      const dataUrl = await this.fileToDataUrl(file)
+      
+      // Use MCP service for image compression
+      const compressedImage = await MCPService.compressImage(dataUrl, quality, maxWidth, maxWidth)
+      return compressedImage
+    } catch (error) {
+      console.warn('MCP image compression failed, using fallback:', error)
+      // Fallback to canvas compression
+      return this.fallbackCompressImage(file, maxWidth, quality)
+    }
+  }
+
+  async fileToDataUrl(file) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader()
+      reader.onload = () => resolve(reader.result)
+      reader.onerror = reject
+      reader.readAsDataURL(file)
+    })
+  }
+
+  async fallbackCompressImage(file, maxWidth = 800, quality = 0.8) {
     return new Promise((resolve, reject) => {
       const canvas = document.createElement('canvas')
       const ctx = canvas.getContext('2d')

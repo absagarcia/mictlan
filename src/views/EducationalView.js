@@ -29,22 +29,27 @@ export class EducationalView {
       // Create main container
       this.container.innerHTML = `
         <div class="educational-view">
-          <header class="educational-header">
+          <a href="#main-educational-content" class="skip-link">${i18n.t('accessibility.skip_to_content')}</a>
+          
+          <header class="educational-header" role="banner">
             <div class="container">
               <h1 class="educational-title">${i18n.t('education.title')}</h1>
               <p class="educational-subtitle">${i18n.t('education.subtitle')}</p>
             </div>
           </header>
           
-          <nav class="educational-nav">
+          <nav class="educational-nav" role="navigation" aria-label="${i18n.t('accessibility.main_navigation')}">
             <div class="container">
-              <div class="nav-tabs" role="tablist">
+              <div class="nav-tabs" role="tablist" aria-label="${i18n.t('accessibility.educational_section')}">
                 <button class="nav-tab active" 
                         data-section="overview" 
                         role="tab" 
                         aria-selected="true"
-                        aria-controls="overview-panel">
-                  <span class="tab-icon">🏛️</span>
+                        aria-controls="overview-panel"
+                        id="overview-tab"
+                        tabindex="0"
+                        aria-label="Visión General - ${i18n.t('accessibility.current_tab')}">
+                  <span class="tab-icon" aria-hidden="true">🏛️</span>
                   <span class="tab-text">Visión General</span>
                 </button>
                 
@@ -52,8 +57,11 @@ export class EducationalView {
                         data-section="altar-levels" 
                         role="tab" 
                         aria-selected="false"
-                        aria-controls="altar-levels-panel">
-                  <span class="tab-icon">📚</span>
+                        aria-controls="altar-levels-panel"
+                        id="altar-levels-tab"
+                        tabindex="-1"
+                        aria-label="${i18n.t('education.traditions')} - ${i18n.t('accessibility.altar_level')}">
+                  <span class="tab-icon" aria-hidden="true">📚</span>
                   <span class="tab-text">${i18n.t('education.traditions')}</span>
                 </button>
                 
@@ -61,8 +69,11 @@ export class EducationalView {
                         data-section="offerings" 
                         role="tab" 
                         aria-selected="false"
-                        aria-controls="offerings-panel">
-                  <span class="tab-icon">🎁</span>
+                        aria-controls="offerings-panel"
+                        id="offerings-tab"
+                        tabindex="-1"
+                        aria-label="${i18n.t('education.offerings_guide')} - ${i18n.t('accessibility.offering_category')}">
+                  <span class="tab-icon" aria-hidden="true">🎁</span>
                   <span class="tab-text">${i18n.t('education.offerings_guide')}</span>
                 </button>
                 
@@ -70,8 +81,11 @@ export class EducationalView {
                         data-section="coco-themes" 
                         role="tab" 
                         aria-selected="false"
-                        aria-controls="coco-themes-panel">
-                  <span class="tab-icon">🎬</span>
+                        aria-controls="coco-themes-panel"
+                        id="coco-themes-tab"
+                        tabindex="-1"
+                        aria-label="${i18n.t('education.coco_themes')} - ${i18n.t('accessibility.coco_theme')}">
+                  <span class="tab-icon" aria-hidden="true">🎬</span>
                   <span class="tab-text">${i18n.t('education.coco_themes')}</span>
                 </button>
                 
@@ -79,49 +93,66 @@ export class EducationalView {
                         data-section="respectful-practices" 
                         role="tab" 
                         aria-selected="false"
-                        aria-controls="respectful-practices-panel">
-                  <span class="tab-icon">🙏</span>
+                        aria-controls="respectful-practices-panel"
+                        id="respectful-practices-tab"
+                        tabindex="-1"
+                        aria-label="${i18n.t('education.respectful_practices')} - ${i18n.t('accessibility.respectful_practices')}">
+                  <span class="tab-icon" aria-hidden="true">🙏</span>
                   <span class="tab-text">${i18n.t('education.respectful_practices')}</span>
                 </button>
               </div>
             </div>
           </nav>
           
-          <main class="educational-content">
+          <main class="educational-content" role="main" aria-label="${i18n.t('accessibility.educational_content')}" id="main-educational-content">
             <div class="container">
               <div class="content-panels">
                 <div id="overview-panel" 
                      class="content-panel active" 
                      role="tabpanel" 
-                     aria-labelledby="overview-tab">
+                     aria-labelledby="overview-tab"
+                     tabindex="0"
+                     aria-live="polite">
                   ${this.renderOverviewPanel()}
                 </div>
                 
                 <div id="altar-levels-panel" 
                      class="content-panel" 
                      role="tabpanel" 
-                     aria-labelledby="altar-levels-tab">
+                     aria-labelledby="altar-levels-tab"
+                     tabindex="0"
+                     aria-live="polite"
+                     hidden>
                   ${this.renderAltarLevelsPanel()}
                 </div>
                 
                 <div id="offerings-panel" 
                      class="content-panel" 
                      role="tabpanel" 
-                     aria-labelledby="offerings-tab">
+                     aria-labelledby="offerings-tab"
+                     tabindex="0"
+                     aria-live="polite"
+                     hidden>
                   ${this.renderOfferingsPanel()}
                 </div>
                 
                 <div id="coco-themes-panel" 
                      class="content-panel" 
                      role="tabpanel" 
-                     aria-labelledby="coco-themes-tab">
+                     aria-labelledby="coco-themes-tab"
+                     tabindex="0"
+                     aria-live="polite"
+                     hidden>
                   <div id="coco-themes-content"></div>
                 </div>
                 
                 <div id="respectful-practices-panel" 
                      class="content-panel" 
                      role="tabpanel" 
-                     aria-labelledby="respectful-practices-tab">
+                     aria-labelledby="respectful-practices-tab"
+                     tabindex="0"
+                     aria-live="polite"
+                     hidden>
                   <div id="respectful-practices-content"></div>
                 </div>
               </div>
@@ -182,16 +213,35 @@ export class EducationalView {
           tab.click()
         }
         
-        // Arrow key navigation
-        if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
+        // Arrow key navigation for tabs
+        if (e.key === 'ArrowRight' || e.key === 'ArrowLeft' || e.key === 'ArrowDown' || e.key === 'ArrowUp') {
           e.preventDefault()
           const tabs = Array.from(navTabs)
           const currentIndex = tabs.indexOf(tab)
-          const nextIndex = e.key === 'ArrowRight' 
-            ? (currentIndex + 1) % tabs.length
-            : (currentIndex - 1 + tabs.length) % tabs.length
+          let nextIndex = currentIndex
+          
+          if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+            nextIndex = (currentIndex + 1) % tabs.length
+          } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+            nextIndex = (currentIndex - 1 + tabs.length) % tabs.length
+          }
           
           tabs[nextIndex].focus()
+          tabs[nextIndex].click()
+        }
+        
+        // Home and End keys
+        if (e.key === 'Home') {
+          e.preventDefault()
+          navTabs[0].focus()
+          navTabs[0].click()
+        }
+        
+        if (e.key === 'End') {
+          e.preventDefault()
+          const lastTab = navTabs[navTabs.length - 1]
+          lastTab.focus()
+          lastTab.click()
         }
       })
     })
@@ -217,11 +267,33 @@ export class EducationalView {
       const isActive = tab.dataset.section === section
       tab.classList.toggle('active', isActive)
       tab.setAttribute('aria-selected', isActive.toString())
+      tab.tabIndex = isActive ? 0 : -1
+      
+      // Update aria-label for current tab
+      if (isActive) {
+        const currentLabel = tab.getAttribute('aria-label')
+        if (!currentLabel.includes(i18n.t('accessibility.current_tab'))) {
+          tab.setAttribute('aria-label', `${tab.querySelector('.tab-text').textContent} - ${i18n.t('accessibility.current_tab')}`)
+        }
+      } else {
+        const label = tab.getAttribute('aria-label')
+        if (label.includes(i18n.t('accessibility.current_tab'))) {
+          tab.setAttribute('aria-label', label.replace(` - ${i18n.t('accessibility.current_tab')}`, ''))
+        }
+      }
     })
     
     contentPanels.forEach(panel => {
       const isActive = panel.id === `${section}-panel`
       panel.classList.toggle('active', isActive)
+      panel.hidden = !isActive
+      
+      if (isActive) {
+        // Focus the active panel for screen readers
+        setTimeout(() => {
+          panel.focus()
+        }, 100)
+      }
     })
     
     // Load section-specific content
@@ -238,7 +310,7 @@ export class EducationalView {
     
     // Use accessibility manager if available
     if (window.accessibilityManager) {
-      window.accessibilityManager.announce(`Sección cambiada a: ${sectionNames[section]}`)
+      window.accessibilityManager.announce(`${i18n.t('accessibility.section_changed')}: ${sectionNames[section]}`)
     }
   }
 
@@ -291,47 +363,70 @@ export class EducationalView {
     if (!panel.querySelector('.levels-interactive')) {
       const interactiveContent = document.createElement('div')
       interactiveContent.className = 'levels-interactive'
+      interactiveContent.setAttribute('data-keyboard-navigation', 'grid')
       interactiveContent.innerHTML = `
-        <div class="levels-grid">
-          <div class="level-card" data-level="1" tabindex="0" role="button">
+        <div class="levels-grid" role="grid" aria-label="${i18n.t('accessibility.altar_level')} - ${i18n.t('accessibility.interactive_grid')}">
+          <div class="level-card" 
+               data-level="1" 
+               tabindex="0" 
+               role="gridcell button"
+               aria-label="${i18n.t('altar.level1')} - ${i18n.t('accessibility.learn_more')}"
+               aria-describedby="level1-desc">
             <div class="level-header">
-              <span class="level-icon">🌍</span>
+              <span class="level-icon" aria-hidden="true">🌍</span>
               <h3>${i18n.t('altar.level1')}</h3>
             </div>
-            <p>${i18n.t('altar.level1_description')}</p>
+            <p id="level1-desc">${i18n.t('altar.level1_description')}</p>
             <div class="level-action">
-              <span class="learn-more-text">Aprender más →</span>
+              <span class="learn-more-text" aria-hidden="true">${i18n.t('accessibility.learn_more')} →</span>
             </div>
           </div>
           
-          <div class="level-card" data-level="2" tabindex="0" role="button">
+          <div class="level-card" 
+               data-level="2" 
+               tabindex="-1" 
+               role="gridcell button"
+               aria-label="${i18n.t('altar.level2')} - ${i18n.t('accessibility.learn_more')}"
+               aria-describedby="level2-desc">
             <div class="level-header">
-              <span class="level-icon">🌉</span>
+              <span class="level-icon" aria-hidden="true">🌉</span>
               <h3>${i18n.t('altar.level2')}</h3>
             </div>
-            <p>${i18n.t('altar.level2_description')}</p>
+            <p id="level2-desc">${i18n.t('altar.level2_description')}</p>
             <div class="level-action">
-              <span class="learn-more-text">Aprender más →</span>
+              <span class="learn-more-text" aria-hidden="true">${i18n.t('accessibility.learn_more')} →</span>
             </div>
           </div>
           
-          <div class="level-card" data-level="3" tabindex="0" role="button">
+          <div class="level-card" 
+               data-level="3" 
+               tabindex="-1" 
+               role="gridcell button"
+               aria-label="${i18n.t('altar.level3')} - ${i18n.t('accessibility.learn_more')}"
+               aria-describedby="level3-desc">
             <div class="level-header">
-              <span class="level-icon">☁️</span>
+              <span class="level-icon" aria-hidden="true">☁️</span>
               <h3>${i18n.t('altar.level3')}</h3>
             </div>
-            <p>${i18n.t('altar.level3_description')}</p>
+            <p id="level3-desc">${i18n.t('altar.level3_description')}</p>
             <div class="level-action">
-              <span class="learn-more-text">Aprender más →</span>
+              <span class="learn-more-text" aria-hidden="true">${i18n.t('accessibility.learn_more')} →</span>
             </div>
           </div>
+        </div>
+        
+        <div class="sr-only" aria-live="polite" id="level-instructions">
+          ${i18n.t('accessibility.navigate_with_arrows')}. ${i18n.t('accessibility.activate_with_enter')}.
         </div>
       `
       
       // Add event listeners for level cards
-      interactiveContent.querySelectorAll('.level-card').forEach(card => {
+      interactiveContent.querySelectorAll('.level-card').forEach((card, index) => {
         card.addEventListener('click', () => {
           const level = parseInt(card.dataset.level)
+          if (window.accessibilityManager) {
+            window.accessibilityManager.announce(`${i18n.t('accessibility.content_loaded')}: ${card.querySelector('h3').textContent}`)
+          }
           this.educationalContent.showLevelContent(level)
         })
         
@@ -340,6 +435,14 @@ export class EducationalView {
             e.preventDefault()
             card.click()
           }
+        })
+        
+        // Focus management for grid navigation
+        card.addEventListener('focus', () => {
+          interactiveContent.querySelectorAll('.level-card').forEach(otherCard => {
+            otherCard.tabIndex = -1
+          })
+          card.tabIndex = 0
         })
       })
       
@@ -355,58 +458,87 @@ export class EducationalView {
     if (!panel.querySelector('.offerings-interactive')) {
       const interactiveContent = document.createElement('div')
       interactiveContent.className = 'offerings-interactive'
+      interactiveContent.setAttribute('data-keyboard-navigation', 'grid')
       interactiveContent.innerHTML = `
-        <div class="offerings-categories">
-          <div class="category-card" data-category="essential" tabindex="0" role="button">
+        <div class="offerings-categories" role="grid" aria-label="${i18n.t('accessibility.offering_category')} - ${i18n.t('accessibility.interactive_grid')}">
+          <div class="category-card" 
+               data-category="essential" 
+               tabindex="0" 
+               role="gridcell button"
+               aria-label="Elementos Esenciales - ${i18n.t('accessibility.view_details')}"
+               aria-describedby="essential-desc">
             <div class="category-header">
-              <span class="category-icon">⚡</span>
+              <span class="category-icon" aria-hidden="true">⚡</span>
               <h3>Elementos Esenciales</h3>
             </div>
-            <p>Los cuatro elementos básicos que no pueden faltar</p>
+            <p id="essential-desc">Los cuatro elementos básicos que no pueden faltar</p>
             <div class="category-items">
-              <span class="item-preview">💧 🧂 🕯️ 🔥</span>
+              <span class="item-preview" aria-label="Agua, sal, velas y fuego" aria-hidden="true">💧 🧂 🕯️ 🔥</span>
             </div>
           </div>
           
-          <div class="category-card" data-category="flowers" tabindex="0" role="button">
+          <div class="category-card" 
+               data-category="flowers" 
+               tabindex="-1" 
+               role="gridcell button"
+               aria-label="Flores y Decoración - ${i18n.t('accessibility.view_details')}"
+               aria-describedby="flowers-desc">
             <div class="category-header">
-              <span class="category-icon">🌼</span>
+              <span class="category-icon" aria-hidden="true">🌼</span>
               <h3>Flores y Decoración</h3>
             </div>
-            <p>Flores que guían y adornan el camino</p>
+            <p id="flowers-desc">Flores que guían y adornan el camino</p>
             <div class="category-items">
-              <span class="item-preview">🌼 🌸 👑</span>
+              <span class="item-preview" aria-label="Cempasúchil, flores y coronas" aria-hidden="true">🌼 🌸 👑</span>
             </div>
           </div>
           
-          <div class="category-card" data-category="food" tabindex="0" role="button">
+          <div class="category-card" 
+               data-category="food" 
+               tabindex="-1" 
+               role="gridcell button"
+               aria-label="Alimentos Tradicionales - ${i18n.t('accessibility.view_details')}"
+               aria-describedby="food-desc">
             <div class="category-header">
-              <span class="category-icon">🍞</span>
+              <span class="category-icon" aria-hidden="true">🍞</span>
               <h3>Alimentos Tradicionales</h3>
             </div>
-            <p>Comida sagrada y favorita de los difuntos</p>
+            <p id="food-desc">Comida sagrada y favorita de los difuntos</p>
             <div class="category-items">
-              <span class="item-preview">🍞 🍎 🍬 🍽️</span>
+              <span class="item-preview" aria-label="Pan de muerto, frutas, dulces y comida" aria-hidden="true">🍞 🍎 🍬 🍽️</span>
             </div>
           </div>
           
-          <div class="category-card" data-category="personal" tabindex="0" role="button">
+          <div class="category-card" 
+               data-category="personal" 
+               tabindex="-1" 
+               role="gridcell button"
+               aria-label="Elementos Personales - ${i18n.t('accessibility.view_details')}"
+               aria-describedby="personal-desc">
             <div class="category-header">
-              <span class="category-icon">📷</span>
+              <span class="category-icon" aria-hidden="true">📷</span>
               <h3>Elementos Personales</h3>
             </div>
-            <p>Objetos que conectan con la individualidad</p>
+            <p id="personal-desc">Objetos que conectan con la individualidad</p>
             <div class="category-items">
-              <span class="item-preview">📷 💎 🎵 🧸</span>
+              <span class="item-preview" aria-label="Fotografías, joyas, música y juguetes" aria-hidden="true">📷 💎 🎵 🧸</span>
             </div>
           </div>
+        </div>
+        
+        <div class="sr-only" aria-live="polite" id="offerings-instructions">
+          ${i18n.t('accessibility.navigate_with_arrows')}. ${i18n.t('accessibility.activate_with_enter')}.
         </div>
       `
       
       // Add event listeners for category cards
-      interactiveContent.querySelectorAll('.category-card').forEach(card => {
+      interactiveContent.querySelectorAll('.category-card').forEach((card, index) => {
         card.addEventListener('click', () => {
           const category = card.dataset.category
+          const categoryName = card.querySelector('h3').textContent
+          if (window.accessibilityManager) {
+            window.accessibilityManager.announce(`${i18n.t('accessibility.content_loaded')}: ${categoryName}`)
+          }
           this.showOfferingCategory(category)
         })
         
@@ -415,6 +547,14 @@ export class EducationalView {
             e.preventDefault()
             card.click()
           }
+        })
+        
+        // Focus management for grid navigation
+        card.addEventListener('focus', () => {
+          interactiveContent.querySelectorAll('.category-card').forEach(otherCard => {
+            otherCard.tabIndex = -1
+          })
+          card.tabIndex = 0
         })
       })
       

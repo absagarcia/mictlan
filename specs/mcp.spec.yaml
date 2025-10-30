@@ -1,0 +1,61 @@
+# MCP (Model Context Protocol) Specification
+# Para Nivel Mictlán - Stack Completo de Kiro
+
+mcp:
+  version: "1.0"
+  name: "DiaMuertosAI"
+  description: "Integración de IA para generar contenido del Día de Muertos"
+  
+  providers:
+    - name: "calaveritas_generator"
+      type: "text_generation"
+      description: "Generador de calaveritas literarias tradicionales"
+      model: "claude-3-sonnet"
+      
+      prompts:
+        - name: "calaverita_prompt"
+          template: |
+            Eres un poeta mexicano experto en calaveritas del Día de Muertos.
+            Crea una calaverita literaria de 4-8 versos para: {persona}
+            Características: {caracteristicas}
+            Estilo: tradicional, rimado, con humor suave
+            Incluye referencias a tradiciones mexicanas.
+      
+      parameters:
+        max_tokens: 200
+        temperature: 0.8
+        
+    - name: "ofrenda_suggestions"
+      type: "text_generation"
+      description: "Sugerencias personalizadas de elementos para ofrendas"
+      model: "claude-3-haiku"
+      
+      prompts:
+        - name: "ofrenda_prompt"
+          template: |
+            Sugiere elementos tradicionales para una ofrenda del Día de Muertos
+            Para: {tipo_persona}
+            Región: {region}
+            Incluye: comidas, bebidas, objetos personales, flores
+            Explica el significado de cada elemento.
+
+  tools:
+    - name: "image_analysis"
+      description: "Analizar fotos subidas para sugerir elementos de altar"
+      type: "vision"
+      
+    - name: "memory_enhancement"
+      description: "Mejorar descripciones de recuerdos con contexto cultural"
+      type: "text_processing"
+
+  integration:
+    hooks:
+      - "useCalaveritaGenerator"
+      - "useOfrendaSuggestions"
+      - "useImageAnalysis"
+    
+    steering:
+      routes:
+        - "/ai/calaverita"
+        - "/ai/ofrenda"
+        - "/ai/analyze"

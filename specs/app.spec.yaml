@@ -1,0 +1,77 @@
+# Kiro App Specification
+# JSConf MX 2025 - Code of the Dead Challenge
+# Día de Muertos Themed Application
+
+app:
+  name: "Altar Digital"
+  description: "Aplicación interactiva para crear altares digitales del Día de Muertos"
+  theme: "dia-de-muertos"
+  version: "1.0.0"
+  
+  # Configuración para Nivel Ofrenda (Básico)
+  features:
+    - name: "responsive_design"
+      description: "Diseño adaptable a dispositivos móviles y desktop"
+      priority: "high"
+    
+    - name: "altar_creator"
+      description: "Interfaz para crear altares digitales"
+      priority: "high"
+    
+    - name: "photo_upload"
+      description: "Subir fotos de seres queridos"
+      priority: "medium"
+
+  # Configuración para Nivel Catrina (Avanzado)
+  interactive_features:
+    - name: "data_persistence"
+      description: "Guardar altares creados localmente"
+      storage: "localStorage"
+    
+    - name: "altar_gallery"
+      description: "Galería de altares creados"
+      priority: "medium"
+    
+    - name: "memory_sharing"
+      description: "Compartir recuerdos y mensajes"
+      priority: "medium"
+
+  # Configuración para Nivel Mictlán (Bonus - Stack Completo)
+  advanced_stack:
+    mcp:
+      enabled: true
+      description: "Model Context Protocol para IA generativa"
+    
+    steering:
+      enabled: true
+      description: "Navegación y estado de la aplicación"
+    
+    hooks:
+      enabled: true
+      description: "Hooks personalizados para funcionalidad avanzada"
+
+styling:
+  theme: "dia-de-muertos"
+  colors:
+    primary: "#FF6B35"      # Naranja cempasúchil
+    secondary: "#8B4513"    # Marrón tierra
+    accent: "#FFD700"       # Dorado
+    background: "#1A1A1A"   # Negro profundo
+    text: "#F5F5DC"         # Beige suave
+  
+  fonts:
+    primary: "Fredoka One"  # Para títulos festivos
+    secondary: "Inter"      # Para texto body
+
+components:
+  - name: "AltarCanvas"
+    description: "Componente principal para crear el altar"
+    
+  - name: "PhotoFrame"
+    description: "Marco para fotos con estilo tradicional"
+    
+  - name: "OfrendaItem"
+    description: "Elementos de ofrenda (velas, flores, comida)"
+    
+  - name: "MemoryCard"
+    description: "Tarjeta para escribir recuerdos"

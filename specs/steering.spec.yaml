@@ -1,0 +1,97 @@
+# Steering Specification
+# Sistema de navegación y estado para la aplicación
+
+steering:
+  version: "1.0"
+  name: "DiaMuertosNavigation"
+  description: "Sistema de navegación para la aplicación del Día de Muertos"
+  
+  routes:
+    - path: "/"
+      name: "home"
+      component: "HomePage"
+      title: "Altar Digital - Día de Muertos"
+      description: "Página principal con introducción a la tradición"
+      
+    - path: "/crear-altar"
+      name: "crear_altar"
+      component: "AltarCreator"
+      title: "Crear tu Altar"
+      description: "Herramientas para crear un altar digital personalizado"
+      auth_required: false
+      
+    - path: "/galeria"
+      name: "galeria"
+      component: "AltarGallery"
+      title: "Galería de Altares"
+      description: "Explora altares creados por la comunidad"
+      
+    - path: "/tradiciones"
+      name: "tradiciones"
+      component: "TradicionesPage"
+      title: "Tradiciones del Día de Muertos"
+      description: "Aprende sobre las tradiciones mexicanas"
+      
+    - path: "/mi-altar/:id"
+      name: "altar_detail"
+      component: "AltarDetail"
+      title: "Mi Altar"
+      description: "Vista detallada del altar"
+      params:
+        - name: "id"
+          type: "string"
+          required: true
+
+  state_management:
+    global_state:
+      - name: "currentAltar"
+        type: "object"
+        description: "Altar actualmente en edición"
+        
+      - name: "userAltars"
+        type: "array"
+        description: "Lista de altares del usuario"
+        persistence: "localStorage"
+        
+      - name: "selectedMemories"
+        type: "array"
+        description: "Recuerdos seleccionados para el altar actual"
+        
+      - name: "aiSuggestions"
+        type: "object"
+        description: "Sugerencias generadas por IA"
+
+  navigation_flow:
+    onboarding:
+      - step: "welcome"
+        route: "/"
+        action: "show_intro"
+        
+      - step: "create_first_altar"
+        route: "/crear-altar"
+        action: "guide_altar_creation"
+        
+      - step: "add_memories"
+        route: "/crear-altar"
+        action: "guide_memory_addition"
+
+  transitions:
+    - from: "home"
+      to: "crear_altar"
+      animation: "slide_left"
+      duration: "300ms"
+      
+    - from: "crear_altar"
+      to: "galeria"
+      animation: "fade"
+      duration: "200ms"
+
+  middleware:
+    - name: "analytics"
+      description: "Tracking de navegación para métricas"
+      
+    - name: "persistence"
+      description: "Guardar estado en localStorage"
+      
+    - name: "accessibility"
+      description: "Mejorar accesibilidad en navegación"

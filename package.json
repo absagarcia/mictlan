@@ -1,0 +1,46 @@
+{
+  "name": "mictla",
+  "version": "1.0.0",
+  "description": "Mictla - AR Altar de Muertos con Libro de Memorias Familiar | JSConf MX 2025 Challenge",
+  "type": "module",
+  "main": "src/main.js",
+  "scripts": {
+    "dev": "vite --host --https",
+    "build": "vite build",
+    "preview": "vite preview --https",
+    "test": "vitest --run",
+    "test:watch": "vitest",
+    "test:ui": "vitest --ui",
+    "test:e2e": "playwright test",
+    "lint": "eslint src --ext .js,.jsx,.ts,.tsx",
+    "lint:fix": "eslint src --ext .js,.jsx,.ts,.tsx --fix"
+  },
+  "keywords": [
+    "mictla",
+    "altar-de-muertos",
+    "day-of-the-dead",
+    "webxr",
+    "ar",
+    "three.js",
+    "pwa",
+    "jsconfmx",
+    "kiro"
+  ],
+  "author": "JSConf MX 2025 Participant",
+  "license": "MIT",
+  "dependencies": {
+    "@webxr-input-profiles/motion-controllers": "^1.0.0",
+    "three": "^0.158.0"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^6.0.0",
+    "@typescript-eslint/parser": "^6.0.0",
+    "@vitest/ui": "^0.34.0",
+    "eslint": "^8.50.0",
+    "jsdom": "^27.0.1",
+    "playwright": "^1.40.0",
+    "vite": "^4.5.0",
+    "vite-plugin-pwa": "^0.17.0",
+    "vitest": "^0.34.0"
+  }
+}

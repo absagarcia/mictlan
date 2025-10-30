@@ -1,0 +1,225 @@
+# UI Components Specification
+# Especificación de componentes de interfaz de usuario
+
+components:
+  version: "1.0"
+  theme: "dia-de-muertos"
+  description: "Componentes UI para aplicación del Día de Muertos"
+
+  design_system:
+    colors:
+      primary: "#FF6B35"      # Naranja cempasúchil
+      secondary: "#8B4513"    # Marrón tierra  
+      accent: "#FFD700"       # Dorado
+      background: "#1A1A1A"   # Negro profundo
+      surface: "#2D2D2D"      # Gris oscuro
+      text_primary: "#F5F5DC" # Beige suave
+      text_secondary: "#CCCCCC" # Gris claro
+      error: "#FF4444"        # Rojo error
+      success: "#4CAF50"      # Verde éxito
+
+    typography:
+      headings:
+        family: "Fredoka One"
+        sizes:
+          h1: "2.5rem"
+          h2: "2rem"
+          h3: "1.5rem"
+      body:
+        family: "Inter"
+        sizes:
+          large: "1.125rem"
+          normal: "1rem"
+          small: "0.875rem"
+
+    spacing:
+      xs: "0.25rem"    # 4px
+      sm: "0.5rem"     # 8px
+      md: "1rem"       # 16px
+      lg: "1.5rem"     # 24px
+      xl: "2rem"       # 32px
+      xxl: "3rem"      # 48px
+
+  layout_components:
+    - name: "AppLayout"
+      description: "Layout principal de la aplicación"
+      props:
+        - name: "children"
+          type: "ReactNode"
+          required: true
+        - name: "showNavigation"
+          type: "boolean"
+          default: true
+      
+      features:
+        - "Navigation bar con temática del Día de Muertos"
+        - "Fondo con patrones tradicionales mexicanos"
+        - "Responsive design"
+
+    - name: "AltarCanvas"
+      description: "Área principal para crear y mostrar altares"
+      props:
+        - name: "altar"
+          type: "AltarData"
+          required: true
+        - name: "editable"
+          type: "boolean"
+          default: false
+        - name: "onUpdate"
+          type: "function"
+          optional: true
+      
+      features:
+        - "Drag & drop de elementos"
+        - "Grid system para posicionamiento"
+        - "Vista previa en tiempo real"
+
+  interactive_components:
+    - name: "PhotoFrame"
+      description: "Marco decorativo para fotos con estilos tradicionales"
+      props:
+        - name: "src"
+          type: "string"
+          required: true
+        - name: "alt"
+          type: "string"
+          required: true
+        - name: "frameStyle"
+          type: "ornate | simple | floral"
+          default: "ornate"
+        - name: "size"
+          type: "small | medium | large"
+          default: "medium"
+      
+      animations:
+        - "Hover effect con brillo dorado"
+        - "Transition suave al cambiar tamaño"
+
+    - name: "OfrendaItem"
+      description: "Elemento de ofrenda (velas, flores, comida)"
+      props:
+        - name: "type"
+          type: "vela | flor | comida | bebida | objeto"
+          required: true
+        - name: "draggable"
+          type: "boolean"
+          default: false
+        - name: "onClick"
+          type: "function"
+          optional: true
+      
+      variants:
+        vela:
+          - "Vela blanca tradicional"
+          - "Vela de colores"
+          - "Cirio pascual"
+        flor:
+          - "Cempasúchil (naranja)"
+          - "Cempasúchil (amarillo)"
+          - "Corona de flores"
+        comida:
+          - "Pan de muerto"
+          - "Calaveras de azúcar"
+          - "Mole"
+          - "Tamales"
+
+    - name: "MemoryCard"
+      description: "Tarjeta para escribir y mostrar recuerdos"
+      props:
+        - name: "memory"
+          type: "MemoryData"
+          optional: true
+        - name: "editable"
+          type: "boolean"
+          default: false
+        - name: "onSave"
+          type: "function"
+          optional: true
+      
+      features:
+        - "Rich text editor"
+        - "Contador de caracteres"
+        - "Auto-save"
+
+  form_components:
+    - name: "AltarForm"
+      description: "Formulario para crear/editar altar"
+      fields:
+        - name: "titulo"
+          type: "text"
+          placeholder: "Nombre de tu altar"
+          required: true
+        - name: "dedicado_a"
+          type: "text"
+          placeholder: "Dedicado a..."
+          required: true
+        - name: "descripcion"
+          type: "textarea"
+          placeholder: "Describe tu altar y su significado"
+        - name: "es_publico"
+          type: "checkbox"
+          label: "Hacer público en la galería"
+
+    - name: "CalaveritaGenerator"
+      description: "Formulario para generar calaveritas con IA"
+      props:
+        - name: "onGenerate"
+          type: "function"
+          required: true
+      
+      fields:
+        - name: "persona"
+          type: "text"
+          placeholder: "Nombre de la persona"
+          required: true
+        - name: "caracteristicas"
+          type: "textarea"
+          placeholder: "Características, aficiones, personalidad..."
+        - name: "estilo"
+          type: "select"
+          options: ["tradicional", "humorístico", "nostálgico"]
+
+  display_components:
+    - name: "AltarGallery"
+      description: "Galería de altares en grid responsivo"
+      props:
+        - name: "altars"
+          type: "AltarData[]"
+          required: true
+        - name: "onSelectAltar"
+          type: "function"
+          optional: true
+      
+      features:
+        - "Infinite scroll"
+        - "Filtros por categoría"
+        - "Búsqueda por texto"
+
+    - name: "TradicionInfo"
+      description: "Componente educativo sobre tradiciones"
+      props:
+        - name: "topic"
+          type: "string"
+          required: true
+        - name: "expandable"
+          type: "boolean"
+          default: true
+      
+      topics:
+        - "Historia del Día de Muertos"
+        - "Significado de los elementos"
+        - "Tradiciones regionales"
+        - "Simbolismo de colores"
+
+  accessibility:
+    features:
+      - "ARIA labels en todos los componentes"
+      - "Keyboard navigation"
+      - "Screen reader support"
+      - "High contrast mode"
+      - "Focus indicators"
+    
+    testing:
+      - "Automated accessibility testing"
+      - "Color contrast validation"
+      - "Keyboard navigation testing"

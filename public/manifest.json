@@ -1,0 +1,82 @@
+{
+    "name": "Mictla - Altar de Muertos AR",
+    "short_name": "Mictla",
+    "description": "Explora altares de muertos en realidad aumentada y crea un libro de memorias familiar inspirado en Coco",
+    "theme_color": "#D97706",
+    "background_color": "#1F2937",
+    "display": "standalone",
+    "orientation": "portrait-primary",
+    "scope": "/",
+    "start_url": "/",
+    "lang": "es-MX",
+    "categories": [
+        "education",
+        "entertainment",
+        "lifestyle"
+    ],
+    "icons": [
+        {
+            "src": "pwa-64x64.png",
+            "sizes": "64x64",
+            "type": "image/png"
+        },
+        {
+            "src": "pwa-192x192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "pwa-512x512.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        },
+        {
+            "src": "maskable-icon-512x512.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "maskable"
+        }
+    ],
+    "screenshots": [
+        {
+            "src": "screenshot-wide.png",
+            "sizes": "1280x720",
+            "type": "image/png",
+            "form_factor": "wide"
+        },
+        {
+            "src": "screenshot-narrow.png",
+            "sizes": "720x1280",
+            "type": "image/png",
+            "form_factor": "narrow"
+        }
+    ],
+    "shortcuts": [
+        {
+            "name": "Explorar Altar",
+            "short_name": "Altar",
+            "description": "Explora el altar de muertos en AR",
+            "url": "/altar",
+            "icons": [
+                {
+                    "src": "shortcut-altar.png",
+                    "sizes": "96x96"
+                }
+            ]
+        },
+        {
+            "name": "Libro de Memorias",
+            "short_name": "Memorias",
+            "description": "Crea y ve memorias familiares",
+            "url": "/memories",
+            "icons": [
+                {
+                    "src": "shortcut-memories.png",
+                    "sizes": "96x96"
+                }
+            ]
+        }
+    ],
+    "related_applications": [],
+    "prefer_related_applications": false
+}

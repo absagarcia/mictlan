@@ -1,0 +1,166 @@
+# Hooks Specification
+# Hooks personalizados para funcionalidad avanzada
+
+hooks:
+  version: "1.0"
+  name: "DiaMuertosHooks"
+  description: "Hooks personalizados para la aplicación del Día de Muertos"
+  
+  custom_hooks:
+    # Hook para manejo de altares
+    - name: "useAltar"
+      description: "Hook para crear, editar y gestionar altares"
+      parameters:
+        - name: "altarId"
+          type: "string"
+          optional: true
+      
+      returns:
+        - name: "altar"
+          type: "object"
+          description: "Datos del altar actual"
+          
+        - name: "updateAltar"
+          type: "function"
+          description: "Función para actualizar el altar"
+          
+        - name: "saveAltar"
+          type: "function"
+          description: "Función para guardar el altar"
+          
+        - name: "deleteAltar"
+          type: "function"
+          description: "Función para eliminar el altar"
+      
+      implementation: |
+        export function useAltar(altarId) {
+          const [altar, setAltar] = useState(null);
+          const [loading, setLoading] = useState(false);
+          
+          const updateAltar = (updates) => {
+            setAltar(prev => ({ ...prev, ...updates }));
+          };
+          
+          const saveAltar = async () => {
+            setLoading(true);
+            // Lógica de guardado
+            setLoading(false);
+          };
+          
+          return { altar, updateAltar, saveAltar, loading };
+        }
+
+    # Hook para generación de calaveritas con IA
+    - name: "useCalaveritaGenerator"
+      description: "Hook para generar calaveritas usando MCP"
+      parameters:
+        - name: "persona"
+          type: "string"
+          required: true
+        - name: "caracteristicas"
+          type: "array"
+          optional: true
+      
+      returns:
+        - name: "calaverita"
+          type: "string"
+          description: "Calaverita generada"
+          
+        - name: "generateCalaverita"
+          type: "function"
+          description: "Función para generar nueva calaverita"
+          
+        - name: "isGenerating"
+          type: "boolean"
+          description: "Estado de generación"
+      
+      mcp_integration:
+        provider: "calaveritas_generator"
+        prompt: "calaverita_prompt"
+
+    # Hook para persistencia local
+    - name: "useLocalStorage"
+      description: "Hook para manejo de localStorage con sincronización"
+      parameters:
+        - name: "key"
+          type: "string"
+          required: true
+        - name: "defaultValue"
+          type: "any"
+          optional: true
+      
+      returns:
+        - name: "value"
+          type: "any"
+          description: "Valor actual del storage"
+          
+        - name: "setValue"
+          type: "function"
+          description: "Función para actualizar valor"
+          
+        - name: "removeValue"
+          type: "function"
+          description: "Función para eliminar valor"
+
+    # Hook para manejo de fotos y multimedia
+    - name: "usePhotoUpload"
+      description: "Hook para subir y procesar fotos"
+      parameters:
+        - name: "options"
+          type: "object"
+          optional: true
+      
+      returns:
+        - name: "uploadPhoto"
+          type: "function"
+          description: "Función para subir foto"
+          
+        - name: "uploadedPhotos"
+          type: "array"
+          description: "Lista de fotos subidas"
+          
+        - name: "isUploading"
+          type: "boolean"
+          description: "Estado de subida"
+          
+        - name: "analyzePhoto"
+          type: "function"
+          description: "Analizar foto con IA (MCP)"
+
+    # Hook para audio ambiente
+    - name: "useAmbientAudio"
+      description: "Hook para manejo de audio ambiente tradicional"
+      
+      returns:
+        - name: "playAmbient"
+          type: "function"
+          description: "Reproducir audio ambiente"
+          
+        - name: "stopAmbient"
+          type: "function"
+          description: "Detener audio"
+          
+        - name: "isPlaying"
+          type: "boolean"
+          description: "Estado de reproducción"
+
+  shared_logic:
+    - name: "altar_validation"
+      description: "Lógica compartida para validar datos de altar"
+      
+    - name: "cultural_content"
+      description: "Contenido cultural y educativo reutilizable"
+      
+    - name: "accessibility_helpers"
+      description: "Helpers para mejorar accesibilidad"
+
+  integration:
+    steering:
+      state_hooks:
+        - "useAltar"
+        - "useLocalStorage"
+    
+    mcp:
+      ai_hooks:
+        - "useCalaveritaGenerator"
+        - "usePhotoUpload"

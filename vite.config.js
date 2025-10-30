@@ -2,9 +2,9 @@ import { defineConfig } from 'vite'
 import { VitePWA } from 'vite-plugin-pwa'
 
 export default defineConfig({
-  // HTTPS required for WebXR
+  // HTTP for development
   server: {
-    https: true,
+    https: false,
     host: true,
     port: 3000
   },

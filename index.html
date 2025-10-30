@@ -1,182 +1,244 @@
 <!DOCTYPE html>
 <html lang="es" data-i18n-title="app.name">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Mictla - Altar de Muertos AR</title>
-  
-  <!-- Meta tags -->
-  <meta name="description" content="Explora altares de muertos en realidad aumentada y crea un libro de memorias familiar inspirado en Coco" data-i18n="app.description" />
-  <meta name="keywords" content="altar de muertos, día de muertos, realidad aumentada, AR, WebXR, familia, memorias, Coco, tradiciones mexicanas" />
-  <meta name="author" content="JSConf MX 2025 Participant" />
-  
-  <!-- Open Graph -->
-  <meta property="og:title" content="Mictla - Altar de Muertos AR" />
-  <meta property="og:description" content="Explora altares de muertos en realidad aumentada y crea un libro de memorias familiar" />
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://mictla.app" />
-  <meta property="og:image" content="/og-image.jpg" />
-  
-  <!-- Twitter Card -->
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Mictla - Altar de Muertos AR" />
-  <meta name="twitter:description" content="Explora altares de muertos en realidad aumentada y crea un libro de memorias familiar" />
-  <meta name="twitter:image" content="/twitter-image.jpg" />
-  
-  <!-- PWA Meta -->
-  <meta name="theme-color" content="#D97706" />
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-  <meta name="apple-mobile-web-app-title" content="Mictla" />
-  
-  <!-- Icons -->
-  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-  <link rel="icon" type="image/png" href="/favicon.png" />
-  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-  <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#D97706" />
-  
-  <!-- Manifest -->
-  <link rel="manifest" href="/manifest.json" />
-  
-  <!-- Preconnect to external resources -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  
-  <!-- Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One:wght@400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
-  
-  <!-- Critical CSS will be inlined by Vite -->
-  <style>
-    /* Critical loading styles */
-    body {
-      margin: 0;
-      padding: 0;
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      background: linear-gradient(135deg, #1F2937 0%, #374151 100%);
-      color: #F9FAFB;
-      min-height: 100vh;
-    }
-    
-    .loading-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(31, 41, 55, 0.9);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 9999;
-      opacity: 0;
-      visibility: hidden;
-      transition: opacity 0.3s ease, visibility 0.3s ease;
-    }
-    
-    .loading-overlay.active {
-      opacity: 1;
-      visibility: visible;
-    }
-    
-    .loading-spinner {
-      text-align: center;
-      color: #F9FAFB;
-    }
-    
-    .spinner {
-      width: 40px;
-      height: 40px;
-      border: 3px solid rgba(217, 119, 6, 0.3);
-      border-top: 3px solid #D97706;
-      border-radius: 50%;
-      animation: spin 1s linear infinite;
-      margin: 0 auto 1rem;
-    }
-    
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-    
-    .error-fallback {
-      padding: 2rem;
-      text-align: center;
-      max-width: 600px;
-      margin: 2rem auto;
-    }
-    
-    .error-fallback h1 {
-      color: #EF4444;
-      font-family: 'Fredoka One', cursive;
-      margin-bottom: 1rem;
-    }
-    
-    .error-fallback button {
-      background: #D97706;
-      color: white;
-      border: none;
-      padding: 0.75rem 1.5rem;
-      border-radius: 0.5rem;
-      font-size: 1rem;
-      cursor: pointer;
-      margin-top: 1rem;
-    }
-    
-    .error-fallback button:hover {
-      background: #B45309;
-    }
-    
-    .error-fallback details {
-      margin-top: 1rem;
-      text-align: left;
-    }
-    
-    .error-fallback pre {
-      background: rgba(0, 0, 0, 0.3);
-      padding: 1rem;
-      border-radius: 0.5rem;
-      overflow-x: auto;
-      font-size: 0.875rem;
-    }
-  </style>
-</head>
-<body>
-  <div id="app">
-    <!-- Initial loading state -->
-    <div class="loading-overlay active">
-      <div class="loading-spinner">
-        <div class="spinner"></div>
-        <p>Cargando Mictla...</p>
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0"
+    />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta
+      name="apple-mobile-web-app-status-bar-style"
+      content="black-translucent"
+    />
+    <title>Mictla - Altar de Muertos AR</title>
+
+    <!-- Meta tags -->
+    <meta
+      name="description"
+      content="Explora altares de muertos en realidad aumentada y crea un libro de memorias familiar inspirado en Coco"
+      data-i18n="app.description"
+    />
+    <meta
+      name="keywords"
+      content="altar de muertos, día de muertos, realidad aumentada, AR, WebXR, familia, memorias, Coco, tradiciones mexicanas"
+    />
+    <meta name="author" content="JSConf MX 2025 Participant" />
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Mictla - Altar de Muertos AR" />
+    <meta
+      property="og:description"
+      content="Explora altares de muertos en realidad aumentada y crea un libro de memorias familiar"
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://mictla.app" />
+    <meta property="og:image" content="/og-image.jpg" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Mictla - Altar de Muertos AR" />
+    <meta
+      name="twitter:description"
+      content="Explora altares de muertos en realidad aumentada y crea un libro de memorias familiar"
+    />
+    <meta name="twitter:image" content="/twitter-image.jpg" />
+
+    <!-- PWA Meta -->
+    <meta name="theme-color" content="#D97706" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="Mictla" />
+
+    <!-- Icons -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#D97706" />
+
+    <!-- Manifest -->
+    <link rel="manifest" href="/manifest.json" />
+
+    <!-- Preconnect to external resources -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <!-- Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fredoka+One:wght@400&family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Critical CSS will be inlined by Vite -->
+    <style>
+      /* Critical loading styles */
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI",
+          Roboto, sans-serif;
+        background: linear-gradient(135deg, #1f2937 0%, #374151 100%);
+        color: #f9fafb;
+        min-height: 100vh;
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        -webkit-tap-highlight-color: transparent;
+      }
+
+      /* Mobile optimizations */
+      * {
+        -webkit-tap-highlight-color: transparent;
+        touch-action: manipulation;
+      }
+
+      button {
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        border: none;
+        outline: none;
+        -webkit-tap-highlight-color: transparent;
+        touch-action: manipulation;
+      }
+
+      input,
+      textarea,
+      select {
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        outline: none;
+      }
+
+      .loading-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(31, 41, 55, 0.9);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 9999;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.3s ease, visibility 0.3s ease;
+      }
+
+      .loading-overlay.active {
+        opacity: 1;
+        visibility: visible;
+      }
+
+      .loading-spinner {
+        text-align: center;
+        color: #f9fafb;
+      }
+
+      .spinner {
+        width: 40px;
+        height: 40px;
+        border: 3px solid rgba(217, 119, 6, 0.3);
+        border-top: 3px solid #d97706;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+        margin: 0 auto 1rem;
+      }
+
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+
+      .error-fallback {
+        padding: 2rem;
+        text-align: center;
+        max-width: 600px;
+        margin: 2rem auto;
+      }
+
+      .error-fallback h1 {
+        color: #ef4444;
+        font-family: "Fredoka One", cursive;
+        margin-bottom: 1rem;
+      }
+
+      .error-fallback button {
+        background: #d97706;
+        color: white;
+        border: none;
+        padding: 0.75rem 1.5rem;
+        border-radius: 0.5rem;
+        font-size: 1rem;
+        cursor: pointer;
+        margin-top: 1rem;
+      }
+
+      .error-fallback button:hover {
+        background: #b45309;
+      }
+
+      .error-fallback details {
+        margin-top: 1rem;
+        text-align: left;
+      }
+
+      .error-fallback pre {
+        background: rgba(0, 0, 0, 0.3);
+        padding: 1rem;
+        border-radius: 0.5rem;
+        overflow-x: auto;
+        font-size: 0.875rem;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <!-- Initial loading state -->
+      <div class="loading-overlay active">
+        <div class="loading-spinner">
+          <div class="spinner"></div>
+          <p>Cargando Mictla...</p>
+        </div>
       </div>
     </div>
-  </div>
-  
-  <!-- App will be rendered here -->
-  <script type="module" src="/src/main.js"></script>
-  
-  <!-- JSConf MX Challenge metadata -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "WebApplication",
-    "name": "Mictla",
-    "description": "Altar de Muertos AR con Libro de Memorias Familiar",
-    "url": "https://mictla.app",
-    "applicationCategory": "EducationalApplication",
-    "operatingSystem": "Web",
-    "browserRequirements": "WebXR support recommended",
-    "author": {
-      "@type": "Person",
-      "name": "JSConf MX 2025 Participant"
-    },
-    "about": {
-      "@type": "Event",
-      "name": "JSConf MX 2025 - Code of the Dead Challenge",
-      "location": "Guadalajara, México",
-      "startDate": "2025-10-30",
-      "endDate": "2025-10-31"
-    }
-  }
-  </script>
-</body>
+
+    <!-- App will be rendered here -->
+    <script type="module" src="/src/main.js"></script>
+
+    <!-- JSConf MX Challenge metadata -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Mictla",
+        "description": "Altar de Muertos AR con Libro de Memorias Familiar",
+        "url": "https://mictla.app",
+        "applicationCategory": "EducationalApplication",
+        "operatingSystem": "Web",
+        "browserRequirements": "WebXR support recommended",
+        "author": {
+          "@type": "Person",
+          "name": "JSConf MX 2025 Participant"
+        },
+        "about": {
+          "@type": "Event",
+          "name": "JSConf MX 2025 - Code of the Dead Challenge",
+          "location": "Guadalajara, México",
+          "startDate": "2025-10-30",
+          "endDate": "2025-10-31"
+        }
+      }
+    </script>
+  </body>
 </html>

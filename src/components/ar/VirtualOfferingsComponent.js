@@ -5,6 +5,7 @@
 
 import * as THREE from 'three'
 import { appState } from '../../state/AppState.js'
+import MCPService from '../../services/MCPService.js'
 
 export class VirtualOfferingsComponent {
   constructor(scene, altarGroup, camera) {
@@ -40,8 +41,14 @@ export class VirtualOfferingsComponent {
   async init() {
     console.log('🎁 Initializing Virtual Offerings Component...')
     
+    // Initialize MCP services
+    await MCPService.initialize()
+    
     // Setup offering catalog
     this.setupOfferingCatalog()
+    
+    // Validate offering catalog culturally
+    await this.validateOfferingCatalog()
     
     // Create offering models
     await this.createOfferingModels()
@@ -149,6 +156,35 @@ export class VirtualOfferingsComponent {
       placement: ['tierra'],
       animation: 'steam'
     })
+  }
+
+  /**
+   * Validate offering catalog using MCP cultural validation
+   */
+  async validateOfferingCatalog() {
+    console.log('🔍 Validating offering catalog culturally...')
+    
+    try {
+      const offeringTypes = Array.from(this.offeringCatalog.keys())
+      const validation = await MCPService.validateOfferingTypes(offeringTypes)
+      
+      if (validation.invalidOfferings.length > 0) {
+        console.warn('Some offerings may not be culturally appropriate:', validation.invalidOfferings)
+        
+        // Remove invalid offerings from catalog
+        validation.invalidOfferings.forEach(invalidType => {
+          this.offeringCatalog.delete(invalidType)
+        })
+      }
+      
+      if (validation.suggestions.length > 0) {
+        console.log('Cultural suggestions for offerings:', validation.suggestions)
+      }
+      
+      console.log('✅ Offering catalog validated')
+    } catch (error) {
+      console.warn('Cultural validation failed, proceeding with default catalog:', error)
+    }
   }
 
   /**
@@ -614,9 +650,30 @@ export class VirtualOfferingsComponent {
   /**
    * Place offering at specified position
    */
-  placeOffering(position, level) {
+  async placeOffering(position, level) {
     const offeringModel = this.offeringModels.get(this.selectedOfferingType)
     if (!offeringModel) return
+    
+    try {
+      // Validate cultural appropriateness of placement
+      const placementContext = `Colocando ${this.selectedOfferingType} en el nivel ${level} del altar de muertos`
+      const culturalValidation = await MCPService.validateTradition(placementContext, 'offering_placement')
+      
+      if (!culturalValidation.isValid) {
+        appState.actions.showNotification({
+          type: 'warning',
+          title: 'Colocación no apropiada',
+          message: culturalValidation.suggestions.length > 0 ? 
+            culturalValidation.suggestions[0] : 
+            'Esta colocación puede no ser culturalmente apropiada'
+        })
+        
+        // Still allow placement but with warning
+        console.warn('Cultural validation warning for offering placement:', culturalValidation)
+      }
+    } catch (error) {
+      console.warn('Cultural validation failed for offering placement:', error)
+    }
     
     // Create offering instance
     const offering = offeringModel.clone()

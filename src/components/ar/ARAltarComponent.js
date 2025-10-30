@@ -379,9 +379,9 @@ export class ARAltarComponent {
     const frame = new THREE.Mesh(frameGeometry, frameMaterial)
     
     // Position on the level with better spacing
-    const existingMemorials = level.memorials.length
+    const existingMemorial = level.memorials.length
     const maxMemorials = 8
-    const angle = (existingMemorials / maxMemorials) * Math.PI * 2
+    const angle = (existingMemorial / maxMemorials) * Math.PI * 2
     const radius = 1.2
     
     frame.position.set(

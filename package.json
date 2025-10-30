@@ -5,7 +5,7 @@
   "type": "module",
   "main": "src/main.js",
   "scripts": {
-    "dev": "vite --host --https",
+    "dev": "vite --host",
     "build": "vite build",
     "preview": "vite preview --https",
     "test": "vitest --run",
